@@ -63,7 +63,7 @@ public class HelloWorldJobConfig {
             System.out.println("Hello World Tasklet 2");
 
             // 2번째 step 실패 테스트
-            if(true) {
+            if (false) {
                 throw new Exception("실패");
             }
 
