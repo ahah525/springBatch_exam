@@ -24,7 +24,7 @@ public class HelloWorldJobConfig {
     @Bean
     public Job helloWorldJob() {
         return jobBuilderFactory.get("helloWorldJob")
-                .incrementer(new RunIdIncrementer()) // 강제로 매번 다른 ID를 실행시에 파라미터로 부여
+//                .incrementer(new RunIdIncrementer()) // 강제로 매번 다른 ID를 실행시에 파라미터로 부여
                 .start(helloWorldStep1())
                 .next(helloWorldStep2())
                 .build();
@@ -61,6 +61,11 @@ public class HelloWorldJobConfig {
     public Tasklet helloWorldStep2Tasklet() {
         return (contribution, chunkContext) -> {
             System.out.println("Hello World Tasklet 2");
+
+            // 2번째 step 실패 테스트
+            if(true) {
+                throw new Exception("실패");
+            }
 
             return RepeatStatus.FINISHED;
         };
