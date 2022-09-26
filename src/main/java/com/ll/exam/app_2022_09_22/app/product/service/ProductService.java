@@ -16,19 +16,19 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void create(String name, int price, String makerShopName, List<ProductOption> options) {
+    public Product create(String name, int price, String makerShopName, List<ProductOption> options) {
         Product product = Product.builder()
                 .name(name)
                 .price(price)
                 .makerShopName(makerShopName)
                 .build();
 
-        productRepository.save(product);
-
         for(ProductOption productOption : options) {
             product.addOption(productOption);
         }
 
-//        productRepository.save(product);
+        productRepository.save(product);
+
+        return product;
     }
 }
