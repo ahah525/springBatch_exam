@@ -20,6 +20,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class Product extends BaseEntity {
     private int price;          // 소비자가
+    private int salePrice;      // 판매가
     private int wholesalePrice; // 도매가(동대문 사입가격)
     private String name;
     private String makerShopName;   // 사입처명(원래는 사입처 table을 따로 만들어야 함)
@@ -32,6 +33,7 @@ public class Product extends BaseEntity {
     public void addOption(ProductOption option) {
         option.setProduct(this);
         option.setPrice(getPrice());
+        option.setSalePrice(getSalePrice());
         option.setWholesalePrice(getWholesalePrice());
 
         productOptions.add(option);
