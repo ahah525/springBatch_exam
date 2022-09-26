@@ -19,7 +19,11 @@ import static javax.persistence.FetchType.LAZY;
 public class ProductOption extends BaseEntity {
     private String color;       // 색상
     private String size;        // 사이즈
-    private int price;          // 최종가격(옵션 가격을 포함한)
+    private String displayColor;       // 표시 색상
+    private String displaySize;        // 표시 사이즈
+
+    private int price;                  // 최종 소비자가(옵션 가격을 포함)
+    private int wholesalePrice;         // 옵션 도매가
 
     @ToString.Exclude
     @ManyToOne(fetch = LAZY)
@@ -30,7 +34,9 @@ public class ProductOption extends BaseEntity {
 
     public ProductOption(String color, String size) {
         this.color = color;
+        this.displayColor = color;
         this.size = size;
+        this.displaySize = size;
     }
 
     // 해당 개수만큼 상품 옵션 주문 가능한지
