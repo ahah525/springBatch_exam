@@ -18,10 +18,10 @@ import javax.persistence.ManyToOne;
 @ToString(callSuper = true)
 public class CartItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;              // 주문한 회원
+    private Member member;                  // 장바구니 담은 회원
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ProductOption productOption;    // 주문한 상품 옵션
+    private ProductOption productOption;    // 장바구니 담은 상품 옵션
 
-    private int quantity;;      // 주문 수량
+    private int quantity;;                  // 장바구니 상품 옵션 수량
 }
