@@ -1,6 +1,7 @@
 package com.ll.exam.app_2022_09_22.withParamJob;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class WithParamJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -42,7 +44,7 @@ public class WithParamJobConfig {
             @Value("#{jobParameters['age']}") int age
     ) {
         return (contribution, chunkContext) -> {
-            System.out.println("WithParam 테스클릿 1, %s, %d".formatted(name, age));
+            log.debug("name : {}, age : {}", name, age);
 
             return RepeatStatus.FINISHED;
         };
