@@ -21,6 +21,7 @@ public class ProductOption extends BaseEntity {
     private String size;        // 사이즈
     private int price;          // 최종가격(옵션 가격을 포함한)
 
+    @ToString.Exclude
     @ManyToOne(fetch = LAZY)
     private Product product;    // 해당 옵션의 관련 상품
 
@@ -30,5 +31,15 @@ public class ProductOption extends BaseEntity {
     public ProductOption(String color, String size) {
         this.color = color;
         this.size = size;
+    }
+
+    // 해당 개수만큼 상품 옵션 주문 가능한지
+    public boolean isOrderable(int quantity) {
+        // 품절이 아닌 경우
+        if(!isSoldOut) {
+            return true;
+        }
+        // 품절이 아니고 재고 >= 주문수량 인 경우
+        return getStockQuantity() >= quantity;
     }
 }
