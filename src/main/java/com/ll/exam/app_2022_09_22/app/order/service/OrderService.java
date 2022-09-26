@@ -46,9 +46,9 @@ public class OrderService {
     public Order create(Member member, List<OrderItem> orderItems) {
         Order order = Order.builder()
                 .member(member)
-                .orderItems(orderItems)
                 .build();
 
+        // 장바구니 아이템 목록 추가
         for(OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
