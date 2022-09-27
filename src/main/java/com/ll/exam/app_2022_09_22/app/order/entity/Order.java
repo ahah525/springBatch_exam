@@ -29,4 +29,22 @@ public class Order extends BaseEntity {
 
         orderItems.add(orderItem);
     }
+
+    // 헤당 주문 결제 금액 리턴
+    public int calculatePayPrice() {
+        int payPrice = 0;
+
+        // 해당 주문건의 모든 주문 아이템들의 결제가
+        for(OrderItem orderItem : orderItems) {
+            payPrice += orderItem.calculatePayPrice();
+        }
+
+        return payPrice;
+    }
+
+    public void setPaymentDone() {
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setPaymentDone();
+        }
+    }
 }

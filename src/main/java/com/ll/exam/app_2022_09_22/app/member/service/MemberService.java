@@ -34,6 +34,7 @@ public class MemberService {
         CashLog cashLog = cashService.addCash(member, price, eventType);
 
         long newRestCash = member.getRestCash() + cashLog.getPrice();
+
         member.setRestCash(newRestCash);
         memberRepository.save(member);
 
