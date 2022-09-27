@@ -1,4 +1,4 @@
-package com.ll.exam.app_2022_09_22.withParamJob;
+package com.ll.exam.app_2022_09_22.job.withParam;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

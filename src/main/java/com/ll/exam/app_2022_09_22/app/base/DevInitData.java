@@ -21,10 +21,17 @@ import java.util.List;
 @Profile("dev")
 @Slf4j
 public class DevInitData {
+    // initData 실행 여부(2번 생성되는 것을 막기 위함)
+    private boolean initDataDone = false;
+
     @Bean
     public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService, OrderService orderService) {
         return args ->
         {
+            if(initDataDone) return;
+
+            initDataDone = true;
+
             class Helper {
                 public Order order(Member member, List<ProductOption> productOptions) {
                     for (int i = 0; i < productOptions.size(); i++) {
