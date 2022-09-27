@@ -77,4 +77,14 @@ public class OrderService {
         order.setPaymentDone();
         orderRepository.save(order);
     }
+
+    @Transactional
+    public void refund(Order order) {
+        Member orderer = order.getMember();
+        int payPrice = order.getPayPrice();
+        memberService.addCash(orderer, payPrice, "주문환불__예치금환불");
+
+        order.setRefundDone();
+        orderRepository.save(order);
+    }
 }
