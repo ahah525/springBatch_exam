@@ -56,31 +56,4 @@ public class RebateOrderItem extends BaseEntity {
         refundQuantity = orderItem.getRefundQuantity();
         isPaid = orderItem.isPaid();
     }
-
-    public RebateOrderItem(ProductOption productOption, int quantity) {
-        this.productOption = productOption;
-        this.quantity = quantity;
-        this.price = productOption.getPrice();
-        this.salePrice = productOption.getSalePrice();
-        this.wholesalePrice = productOption.getWholesalePrice();
-    }
-
-    public int calculatePayPrice() {
-        return salePrice * quantity;
-    }
-
-    public void setPaymentDone() {
-        this.pgFee = 0;
-        this.payPrice = calculatePayPrice();
-        this.isPaid = true;
-    }
-
-    public void setRefundDone() {
-        // 이미 모든 수량을 환불처리했다면 리턴
-        if(refundQuantity == quantity) {
-            return;
-        }
-        this.refundQuantity = quantity;
-        this.refundPrice = payPrice;
-    }
 }
