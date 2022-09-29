@@ -17,7 +17,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,16 +61,13 @@ public class MakeRebateOrderItemJobConfig {
 
     @StepScope
     @Bean
-    public RepositoryItemReader<OrderItem> orderItemReader(
-            @Value("#{jobParameters['fromId']}") long fromId,
-            @Value("#{jobParameters['toId']}") long toId
-    ) {
+    public RepositoryItemReader<OrderItem> orderItemReader() {
         return new RepositoryItemReaderBuilder<OrderItem>()
                 .name("orderItemReader")
                 .repository(orderItemRepository)
-                .methodName("findAllByIdBetween")
+                .methodName("findALlByIsPaid")
                 .pageSize(100)
-                .arguments(Arrays.asList(fromId, toId))   // 메서드 인자
+                .arguments(Arrays.asList(true))   // 메서드 인자
                 .sorts(Collections.singletonMap("id", Sort.Direction.ASC))
                 .build();
     }
