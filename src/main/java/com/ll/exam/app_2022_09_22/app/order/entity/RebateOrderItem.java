@@ -42,6 +42,7 @@ public class RebateOrderItem extends BaseEntity {
     private int refundPrice;            // 환불 가격
     private int refundQuantity;         // 환불 수량
     private boolean isPaid;             // 결제 여부
+    private LocalDateTime payDate;      // 결제 일시
 
     // 추가 컬럼
     // 상품
@@ -73,6 +74,7 @@ public class RebateOrderItem extends BaseEntity {
         refundPrice = orderItem.getRefundPrice();
         refundQuantity = orderItem.getRefundQuantity();
         isPaid = orderItem.isPaid();
+        payDate = orderItem.getPayDate();
 
         // 상품
         productName = orderItem.getProductOption().getProduct().getName();
