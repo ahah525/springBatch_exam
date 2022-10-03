@@ -1,6 +1,7 @@
 package com.ll.exam.app_2022_09_22.util;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Util {
@@ -8,14 +9,7 @@ public class Util {
 
         // 해당 년, 월의 마지막 일자 구하기
         public static int getEndDayOf(int year, int month) {
-            String yearMonth = year + "-";
-            String monthStr = month + "";
-
-            if(monthStr.length() == 1) {
-                monthStr = "0" + monthStr;
-            }
-
-            yearMonth += monthStr;
+            String yearMonth = year + "-" + "%02d".formatted(month);
 
             return getEndDayOf(yearMonth);
         }
@@ -27,6 +21,11 @@ public class Util {
                     convertedDate.getMonth().length(convertedDate.isLeapYear()));
 
             return convertedDate.getDayOfMonth();
+        }
+
+        // 날짜 문자열 -> 해당 패턴의 LocalDateTime 변환
+        public static LocalDateTime parse(String pattern, String dateText) {
+            return LocalDateTime.parse(dateText, DateTimeFormatter.ofPattern(pattern));
         }
     }
 }
