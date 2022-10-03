@@ -27,5 +27,10 @@ public class Util {
         public static LocalDateTime parse(String pattern, String dateText) {
             return LocalDateTime.parse(dateText, DateTimeFormatter.ofPattern(pattern));
         }
+
+        // 날짜 문자열 -> 디폴트 패턴의 LocalDateTime 변환
+        public static LocalDateTime parse(String dateText) {
+            return parse("yyyy-MM-dd HH:mm:ss.SSSSSS", dateText);
+        }
     }
 }

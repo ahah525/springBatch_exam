@@ -4,6 +4,7 @@ import com.ll.exam.app_2022_09_22.app.order.entity.OrderItem;
 import com.ll.exam.app_2022_09_22.app.order.entity.RebateOrderItem;
 import com.ll.exam.app_2022_09_22.app.order.repository.OrderItemRepository;
 import com.ll.exam.app_2022_09_22.app.order.repository.RebateOrderItemRepository;
+import com.ll.exam.app_2022_09_22.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -17,11 +18,13 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -61,13 +64,20 @@ public class MakeRebateOrderItemJobConfig {
 
     @StepScope
     @Bean
-    public RepositoryItemReader<OrderItem> orderItemReader() {
+    public RepositoryItemReader<OrderItem> orderItemReader(
+            @Value("#{jobParameters['month']}") String yearMonth
+    ) {
+        // 해당 년월의 시작일시~끝일시 수행
+        int monthEndDay = Util.date.getEndDayOf(yearMonth);
+        LocalDateTime fromDate = Util.date.parse(yearMonth + "-01 00:00:00.000000");
+        LocalDateTime toDate = Util.date.parse(yearMonth + "-%02d 23:59:59.999999".formatted(monthEndDay));
+
         return new RepositoryItemReaderBuilder<OrderItem>()
                 .name("orderItemReader")
                 .repository(orderItemRepository)
-                .methodName("findALlByIsPaid")
+                .methodName("findAllByPayDateBetween")
                 .pageSize(100)
-                .arguments(Arrays.asList(true))   // 메서드 인자
+                .arguments(Arrays.asList(fromDate, toDate))   // 메서드 인자
                 .sorts(Collections.singletonMap("id", Sort.Direction.ASC))
                 .build();
     }
